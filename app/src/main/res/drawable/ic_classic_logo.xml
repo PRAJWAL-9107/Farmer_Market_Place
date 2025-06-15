@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="64dp"
+    android:height="64dp"
+    android:viewportWidth="64"
+    android:viewportHeight="64">
+    <!-- Classic logo: simple green circle -->
+    <path
+        android:fillColor="#FFA726"
+        android:pathData="M32,2A30,30 0 1,0 32,62A30,30 0 1,0 32,2" />
+</vector>

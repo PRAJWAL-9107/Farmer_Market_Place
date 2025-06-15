@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name"> </string>
+    <string name="language">Language</string>
+    <string name="english">English</string>
+    <string name="marathi">Marathi</string>
+    <string name="hindi">Hindi</string>
+    
+    <!-- Auth Screen Strings -->
+    <string name="welcome">Welcome</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="phone">Phone Number</string>
+    <string name="whatsapp">WhatsApp Number</string>
+    <string name="role">Role</string>
+    <string name="farmer">Farmer</string>
+    <string name="buyer">Buyer</string>
+    
+    <!-- Home Screen Strings -->
+    <string name="home">Home</string>
+    <string name="products">Products</string>
+    <string name="profile">Profile</string>
+    <string name="settings">Settings</string>
+    
+    <!-- Product Strings -->
+    <string name="add_product">Add Product</string>
+    <string name="my_products">My Products</string>
+    <string name="name">Name</string>
+    <string name="description">Description</string>
+    <string name="price">Price</string>
+    <string name="quantity">Quantity</string>
+    <string name="category">Category</string>
+    <string name="image">Image</string>
+    <string name="save">Save</string>
+    
+    <!-- Product Unit Strings -->
+    <string name="unit_option">Unit</string>
+    <string name="unit_kg">kg</string>
+    <string name="unit_gram">g</string>
+    <string name="unit_piece">piece</string>
+    <string name="unit_dozen">dozen</string>
+    <string name="unit_liter">liter</string>
+    
+    <!-- Profile Strings -->
+    <string name="edit_profile">Edit Profile</string>
+    <string name="logout">Logout</string>
+    
+    <!-- Error Messages -->
+    <string name="error_required">This field is required</string>
+    <string name="error_invalid_email">Invalid email address</string>
+    <string name="error_password_mismatch">Passwords do not match</string>
+    <string name="open_firebase_console">Open Firebase Console</string>
+    <string name="contact_support">Contact Support</string>
+    
+    <!-- Additional UI labels -->
+    <string name="fruit">Fruits</string>
+    <string name="grains">Grains</string>
+    <string name="dairy">Dairy</string>
+    <string name="dashboard">Dashboard</string>
+    
+    <!-- Support Screen Strings -->
+    <string name="support">Support</string>
+    <string name="support_name">Your Name</string>
+    <string name="support_email">Your Email</string>
+    <string name="support_message">Message</string>
+    <string name="support_submit">Send Message</string>
+    <string name="support_contact">Contact Support</string>
+    <string name="support_email_directly">Or email us directly at %1$s</string>
+    <!-- Dialog and Confirmation Messages -->
+    <string name="delete_product">Delete Product</string>
+    <string name="delete_product_confirmation">Are you sure you want to delete %1$s?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="add_first_product">Add Your First Product</string>
+    <string name="product_details">Product Details</string>
+    <string name="call_seller">Call Seller</string>
+    <string name="whatsapp_app">WhatsApp</string>
+    <string name="send_sms">Send SMS</string>
+    <string name="no_products">No products found</string>
+    <string name="all">All</string>
+    <string name="full_name">Full Name</string>
+    <string name="description_placeholder">Location, Harvest Date, etc.</string>
+</resources>

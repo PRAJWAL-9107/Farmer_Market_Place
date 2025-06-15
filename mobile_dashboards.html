@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmerMP Dashboards</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+        }
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 16px;
+            text-decoration: none;
+            border-radius: 8px;
+            color: white;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        .firebase-button {
+            background-color: #4285f4;
+        }
+        .cloudinary-button {
+            background-color: #2ecc71;
+        }
+        .button:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>FarmerMP Dashboards</h1>
+        <p>Quick access to your development tools</p>
+        <a href="https://console.firebase.google.com" class="button firebase-button">
+            Open Firebase Console
+        </a>
+        <a href="https://cloudinary.com/console" class="button cloudinary-button">
+            Open Cloudinary Dashboard
+        </a>
+    </div>
+</body>
+</html>
