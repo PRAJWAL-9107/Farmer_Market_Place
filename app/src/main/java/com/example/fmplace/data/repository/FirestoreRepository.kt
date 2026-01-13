@@ -1,7 +1,7 @@
 package com.example.fmplace.data.repository
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.firestore.ktx.firestore
 import com.example.fmplace.domain.model.Product
 import com.example.fmplace.domain.model.User
 import kotlinx.coroutines.tasks.await
@@ -18,13 +18,13 @@ class FirestoreRepository @Inject constructor(
         return productsCollection.add(product).await().id
     }
     suspend fun getProduct(productId: String): Product? {
-        return productsCollection.document(productId).get().await().toObject<Product>()
+        return productsCollection.document(productId).get().await().toObject(Product::class.java)
     }
     suspend fun getProducts(): List<Product> {
-        return productsCollection.get().await().documents.mapNotNull { it.toObject<Product>() }
+        return productsCollection.get().await().documents.mapNotNull { it.toObject(Product::class.java) }
     }
     suspend fun getUser(userId: String): User? {
-        return usersCollection.document(userId).get().await().toObject<User>()
+        return usersCollection.document(userId).get().await().toObject(User::class.java)
     }
     suspend fun updateUser(user: User) {
         usersCollection.document(user.id).set(user).await()

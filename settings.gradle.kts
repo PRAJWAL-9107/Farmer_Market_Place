@@ -6,10 +6,10 @@ pluginManagement {
         gradlePluginPortal()
     }
     plugins {
-        id("com.android.application") version "8.2.2"
+        id("com.android.application") version "8.13.0"
         id("org.jetbrains.kotlin.android") version "2.0.0"
         id("org.jetbrains.kotlin.plugin.compose") version "2.0.0"
-        id("com.google.dagger.hilt.android") version "2.50"
+        id("com.google.dagger.hilt.android") version "2.51.1"
         id("com.google.gms.google-services") version "4.4.1"
         id("com.google.devtools.ksp") version "2.0.0-1.0.21"
     }
@@ -21,6 +21,13 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        // Cloudinary repository
+        maven { 
+            url = uri("https://artifactory.cloudinary.com/artifactory/libs-release") 
+            content {
+                includeGroup("com.cloudinary")
+            }
+        }
     }
 }
 

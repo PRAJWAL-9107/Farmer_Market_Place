@@ -14,6 +14,7 @@ data class Product(
     val sellerId: String = "",
     val sellerContact: String = "",
     val sellerName: String = "",
+    val sellerProfilePictureUrl: String = "",
     val createdAt: Long = System.currentTimeMillis()
 ) {
     companion object {
@@ -28,6 +29,7 @@ data class Product(
             val sellerId = map["sellerId"] as? String ?: ""
             val sellerContact = map["sellerContact"] as? String ?: ""
             val sellerName = map["sellerName"] as? String ?: ""
+            val sellerProfilePictureUrl = map["sellerProfilePictureUrl"] as? String ?: ""
             val createdAt = (map["createdAt"] as? Long ?: System.currentTimeMillis())
             
             return Product(
@@ -41,6 +43,7 @@ data class Product(
                 sellerId = sellerId,
                 sellerContact = sellerContact,
                 sellerName = sellerName,
+                sellerProfilePictureUrl = sellerProfilePictureUrl,
                 createdAt = createdAt
             )
         }
@@ -58,6 +61,7 @@ data class Product(
             "sellerId" to sellerId,
             "sellerContact" to sellerContact,
             "sellerName" to sellerName,
+            "sellerProfilePictureUrl" to sellerProfilePictureUrl,
             "createdAt" to createdAt
         )
     }

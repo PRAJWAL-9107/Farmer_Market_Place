@@ -15,11 +15,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.Send
 
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -76,11 +76,13 @@ fun ProductDetailsScreen(navController: NavController, productId: String) {
 
             if (document.exists()) {
                 Log.d("ProductDetailsScreen", "Document snapshot found: ${document.data}")
-                product = document.toObject(Product::class.java)
-                Log.d("ProductDetailsScreen", "Product object mapped: $product")
-                if (product == null) {
-                    error = "Failed to parse product data."
-                    Log.e("ProductDetailsScreen", "Product data could not be parsed into Product object.")
+                val data = document.data
+                if (data != null) {
+                    product = Product.fromMap(data)
+                    Log.d("ProductDetailsScreen", "Product object mapped: $product")
+                } else {
+                    error = "Product data is null"
+                    Log.e("ProductDetailsScreen", "Product data is null")
                 }
             } else {
                 error = "Product not found"
@@ -246,7 +248,7 @@ fun ProductDetailsScreen(navController: NavController, productId: String) {
                             },
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Icon(Icons.Filled.Send, contentDescription = "WhatsApp")
+                            Icon(Icons.AutoMirrored.Filled.Send, contentDescription = "WhatsApp")
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(stringResource(R.string.whatsapp_app))
                         }

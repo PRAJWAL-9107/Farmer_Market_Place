@@ -16,7 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
@@ -51,7 +51,7 @@ import coil.compose.AsyncImage
 import com.example.fmplace.R
 import com.example.fmplace.firebase.AuthRepository
 import com.example.fmplace.firebase.ProductRepository
-import com.example.fmplace.firebase.StorageRepository
+import com.example.fmplace.storage.CloudinaryRepository
 import com.example.fmplace.model.Product
 import com.example.fmplace.utils.Utils
 import com.google.firebase.auth.FirebaseAuth
@@ -67,14 +67,14 @@ fun MyProductsScreen(navController: NavController, firebaseAuth: FirebaseAuth, d
     // TODO: Fix: All usages of MyProductsScreen must provide firebaseAuth and db as arguments.
     // Example:
     // MyProductsScreen(navController, FirebaseAuth.getInstance(), FirebaseFirestore.getInstance())
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
     val productRepository = remember { ProductRepository() }
-    val storageRepository = remember { StorageRepository() }
+    val cloudinaryRepository = remember { CloudinaryRepository(context) }
     val authRepository = remember { AuthRepository(
         firebaseAuth = firebaseAuth,
         db = db
     ) }
-    val context = LocalContext.current
-    val coroutineScope = rememberCoroutineScope()
     
     var products by remember { mutableStateOf<List<Product>>(emptyList()) }
     var isLoading by remember { mutableStateOf(true) }
@@ -124,8 +124,8 @@ fun MyProductsScreen(navController: NavController, firebaseAuth: FirebaseAuth, d
                             val result = productRepository.deleteProduct(product.id)
                             
                             if (result.isSuccess) {
-                                // Delete image from Storage if successful
-                                storageRepository.deleteImage(product.imageUrl)
+                                // Delete image from Cloudinary if successful
+                                cloudinaryRepository.deleteImage(product.imageUrl)
                                 
                                 // Update UI
                                 products = products.filter { it.id != product.id }
@@ -161,7 +161,7 @@ fun MyProductsScreen(navController: NavController, firebaseAuth: FirebaseAuth, d
                 title = { Text("My Products") },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
                 }
             )

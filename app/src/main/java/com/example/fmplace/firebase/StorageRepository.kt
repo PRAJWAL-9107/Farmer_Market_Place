@@ -20,12 +20,6 @@ class StorageRepository {
         return try {
             val imageId = UUID.randomUUID().toString()
             
-            // Ensure the storage reference exists
-            if (storageRef == null) {
-                Log.e(TAG, "Storage reference is null")
-                return Result.failure(Exception("Storage reference is null"))
-            }
-            
             // Create the product_images directory if it doesn't exist
             val imageRef = storageRef.child("product_images/$imageId.jpg")
             

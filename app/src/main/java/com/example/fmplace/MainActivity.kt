@@ -23,6 +23,7 @@ import com.example.fmplace.ui.buyer.ProductDetailsScreen
 import com.example.fmplace.ui.farmer.AddProductScreen
 import com.example.fmplace.ui.farmer.FarmerDashboardScreen
 import com.example.fmplace.ui.farmer.MyProductsScreen
+import com.example.fmplace.ui.profile.EditProfileScreen
 import com.example.fmplace.ui.profile.ProfileScreen
 import com.example.fmplace.ui.support.SupportScreen
 import com.example.fmplace.ui.theme.FarmerMarketPlaceTheme
@@ -82,6 +83,7 @@ class MainActivity : ComponentActivity() {
 
                         composable("support")  { SupportScreen(navController) }
                         composable("profile")  { ProfileScreen(navController, firebaseAuth = FirebaseAuth.getInstance(), db = FirebaseFirestore.getInstance()) }
+                        composable("edit_profile") { EditProfileScreen(navController, firebaseAuth = FirebaseAuth.getInstance(), db = FirebaseFirestore.getInstance()) }
                         composable("settings") { SettingsScreen(navController, firebaseAuth = FirebaseAuth.getInstance(), db = FirebaseFirestore.getInstance()) }
                     }
                 }

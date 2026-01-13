@@ -34,11 +34,21 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
+        // Suppress deprecation warnings in generated code
+        freeCompilerArgs = freeCompilerArgs + listOf(
+            "-Xjvm-default=all",
+            "-opt-in=kotlin.RequiresOptIn"
+        )
+    }
+    
+    // Show detailed deprecation warnings
+    tasks.withType<JavaCompile> {
+        options.compilerArgs.addAll(listOf("-Xlint:deprecation"))
     }
     buildFeatures {
         compose = true
@@ -65,6 +75,14 @@ dependencies {
     implementation("com.google.firebase:firebase-auth:22.3.1")
     implementation("com.google.firebase:firebase-firestore-ktx:24.10.1")
     implementation("com.google.firebase:firebase-storage-ktx:20.3.0")
+    
+    // Bugsee for crash reporting and analytics (alternative: Firebase Crashlytics)
+    implementation("com.bugsee:bugsee-android:+")
+    
+    // Firebase Crashlytics (free, already integrated with Firebase)
+    // implementation("com.google.firebase:firebase-crashlytics-ktx:18.6.0")
+    // implementation("com.google.firebase:firebase-analytics-ktx:21.5.0")
+    
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -77,16 +95,16 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.6")
 
     // Image loading
-    implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation("io.coil-kt:coil-compose:2.6.0")
 
     // Cloudinary for image storage
-    implementation("com.cloudinary:cloudinary-android:2.4.0")
+    implementation("com.cloudinary:cloudinary-android:2.1.0")
 
     // Permission handling
     implementation("com.google.accompanist:accompanist-permissions:0.32.0")
 
     // Dagger Hilt for Dependency Injection
-    implementation("com.google.dagger:hilt-android:2.50")
-    ksp("com.google.dagger:hilt-compiler:2.50")
-    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    ksp("com.google.dagger:hilt-android-compiler:2.51.1")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 }

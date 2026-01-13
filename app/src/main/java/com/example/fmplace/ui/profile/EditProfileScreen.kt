@@ -6,7 +6,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.CameraAlt
@@ -26,22 +28,17 @@ import coil.compose.AsyncImage
 import com.example.fmplace.R
 import com.example.fmplace.firebase.AuthRepository
 import com.example.fmplace.model.User
-import com.example.fmplace.model.UserRole
 import com.example.fmplace.storage.CloudinaryRepository
 import com.example.fmplace.ui.common.ErrorText
-import com.example.fmplace.utils.FirestoreTest
+import com.example.fmplace.ui.common.PrimaryButton
 import com.example.fmplace.utils.Utils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
 
-// TODO: Fix: All usages of ProfileScreen must provide firebaseAuth and db as arguments.
-// Example:
-// ProfileScreen(navController, FirebaseAuth.getInstance(), FirebaseFirestore.getInstance())
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileScreen(navController: NavController, firebaseAuth: FirebaseAuth, db: FirebaseFirestore) {
+fun EditProfileScreen(navController: NavController, firebaseAuth: FirebaseAuth, db: FirebaseFirestore) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val authRepository = AuthRepository(
@@ -53,8 +50,24 @@ fun ProfileScreen(navController: NavController, firebaseAuth: FirebaseAuth, db: 
     var user by remember { mutableStateOf<User?>(null) }
     var isLoading by remember { mutableStateOf(true) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
-    var isFirestoreConnected by remember { mutableStateOf(false) }
     var isUpdatingProfile by remember { mutableStateOf(false) }
+    
+    // Form fields
+    var name by remember { mutableStateOf("") }
+    var phone by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var profilePictureUrl by remember { mutableStateOf("") }
+    
+    // Original values for change detection
+    var originalName by remember { mutableStateOf("") }
+    var originalPhone by remember { mutableStateOf("") }
+    var originalEmail by remember { mutableStateOf("") }
+    var originalProfilePictureUrl by remember { mutableStateOf("") }
+    
+    // Check if any field has been changed
+    val hasChanges = remember(name, phone, email, profilePictureUrl) {
+        name != originalName || phone != originalPhone || email != originalEmail || profilePictureUrl != originalProfilePictureUrl
+    }
     
     // Profile picture upload state
     var imageUri by remember { mutableStateOf<android.net.Uri?>(null) }
@@ -67,16 +80,7 @@ fun ProfileScreen(navController: NavController, firebaseAuth: FirebaseAuth, db: 
             if (uploadResult.isSuccess) {
                 val imageUrl = uploadResult.getOrNull()
                 imageUrl?.let { url ->
-                    // Update user profile with new picture URL
-                    user?.let { currentUser ->
-                        val updatedUser = currentUser.copy(profilePictureUrl = url)
-                        val updateResult = authRepository.updateUserData(currentUser.id, updatedUser)
-                        if (updateResult.isSuccess) {
-                            user = updatedUser
-                        } else {
-                            errorMessage = "Failed to update profile picture"
-                        }
-                    }
+                    profilePictureUrl = url
                 }
             } else {
                 errorMessage = "Failed to upload profile picture"
@@ -100,19 +104,31 @@ fun ProfileScreen(navController: NavController, firebaseAuth: FirebaseAuth, db: 
         }
     }
     
-    //load user data
+    // Load user data
     LaunchedEffect(Unit) {
         try {
             val currentUser = firebaseAuth.currentUser
             if (currentUser != null) {
                 val result = authRepository.getUserData(currentUser.uid ?: "")
                 if (result.isSuccess) {
-                    user = result.getOrNull()
+                    val userData = result.getOrNull()
+                    userData?.let {
+                        user = it
+                        name = it.name
+                        phone = it.phone
+                        email = it.email
+                        profilePictureUrl = it.profilePictureUrl
+                        
+                        // Set original values for change detection
+                        originalName = it.name
+                        originalPhone = it.phone
+                        originalEmail = it.email
+                        originalProfilePictureUrl = it.profilePictureUrl
+                    }
                 } else {
                     errorMessage = result.exceptionOrNull()?.message ?: "Failed to load user data"
                 }
             } else {
-                //if no user is found, navigate back to login
                 navController.navigate("welcome") {
                     popUpTo("welcome") { inclusive = true }
                 }
@@ -124,13 +140,65 @@ fun ProfileScreen(navController: NavController, firebaseAuth: FirebaseAuth, db: 
         }
     }
     
+    // Function to update profile
+    suspend fun updateProfile() {
+        try {
+            isUpdatingProfile = true
+            errorMessage = null
+            
+            user?.let { currentUser ->
+                val updatedUser = currentUser.copy(
+                    name = name,
+                    phone = phone,
+                    email = email,
+                    profilePictureUrl = profilePictureUrl
+                )
+                
+                val updateResult = authRepository.updateUserData(currentUser.id, updatedUser)
+                if (updateResult.isSuccess) {
+                    user = updatedUser
+                    Utils.showToast(context, "Profile updated successfully")
+                    navController.navigateUp()
+                } else {
+                    errorMessage = "Failed to update profile"
+                }
+            }
+        } catch (e: Exception) {
+            errorMessage = "Error updating profile: ${e.message}"
+        } finally {
+            isUpdatingProfile = false
+        }
+    }
+    
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.profile)) },
+                title = { Text("Edit Profile") },
                 navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
+                    IconButton(onClick = { navController.navigateUp() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                    }
+                },
+                actions = {
+                    // Show save button only when there are changes
+                    if (hasChanges) {
+                        IconButton(
+                            onClick = {
+                                coroutineScope.launch {
+                                    updateProfile()
+                                }
+                            },
+                            enabled = !isUpdatingProfile && name.isNotBlank() && email.isNotBlank() && phone.isNotBlank()
+                        ) {
+                            if (isUpdatingProfile) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier.size(24.dp),
+                                    strokeWidth = 2.dp
+                                )
+                            } else {
+                                Icon(Icons.Filled.Edit, contentDescription = "Save Profile")
+                            }
+                        }
                     }
                 }
             )
@@ -145,13 +213,14 @@ fun ProfileScreen(navController: NavController, firebaseAuth: FirebaseAuth, db: 
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             } else if (errorMessage != null) {
                 ErrorText(errorMessage!!, modifier = Modifier.align(Alignment.Center))
-            } else if (user != null) {
+            } else {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
                         .padding(16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                    verticalArrangement = Arrangement.spacedBy(24.dp)
                 ) {
                     // Profile Picture Section
                     Box(
@@ -160,7 +229,7 @@ fun ProfileScreen(navController: NavController, firebaseAuth: FirebaseAuth, db: 
                             .clickable { launcher.launch("image/*") }
                     ) {
                         AsyncImage(
-                            model = if (user!!.profilePictureUrl.isNotBlank()) user!!.profilePictureUrl else null,
+                            model = if (profilePictureUrl.isNotBlank()) profilePictureUrl else null,
                             contentDescription = "Profile Picture",
                             modifier = Modifier
                                 .fillMaxSize()
@@ -189,97 +258,50 @@ fun ProfileScreen(navController: NavController, firebaseAuth: FirebaseAuth, db: 
                         }
                     }
                     
-                    // User info
-                    Text(
-                        text = user!!.name,
-                        style = MaterialTheme.typography.headlineMedium,
-                        fontWeight = FontWeight.Bold
+                    // Name Field
+                    OutlinedTextField(
+                        value = name,
+                        onValueChange = { name = it },
+                        label = { Text("Name") },
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true
                     )
                     
-                    Spacer(modifier = Modifier.height(8.dp))
-                    
-                    Text(
-                        text = "📧 ${user!!.email}",
-                        style = MaterialTheme.typography.bodyLarge
+                    // Email Field
+                    OutlinedTextField(
+                        value = email,
+                        onValueChange = { email = it },
+                        label = { Text("Email") },
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true
                     )
                     
-                    Spacer(modifier = Modifier.height(4.dp))
-                    
-                    Text(
-                        text = "📱 ${user!!.phone}",
-                        style = MaterialTheme.typography.bodyLarge
+                    // Phone Field
+                    OutlinedTextField(
+                        value = phone,
+                        onValueChange = { phone = it },
+                        label = { Text("Phone") },
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true
                     )
                     
-                    Spacer(modifier = Modifier.height(24.dp))
-                    
-                    // Edit Profile Button
-                    Button(
-                        onClick = {
-                            navController.navigate("edit_profile")
-                        },
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Icon(Icons.Filled.Edit, contentDescription = "Edit Profile")
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(stringResource(R.string.edit_profile))
+                    // Error message
+                    if (errorMessage != null) {
+                        ErrorText(text = errorMessage!!)
                     }
                     
-                    Spacer(modifier = Modifier.height(24.dp))
-                    
-                    //common options for all users
-                    OutlinedButton(
-                        onClick = {
-                            navController.navigate("add_product")
-                        },
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(stringResource(R.string.add_product))
-                    }
-                        
-                    Spacer(modifier = Modifier.height(16.dp))
-                        
-                    OutlinedButton(
-                        onClick = {
-                            navController.navigate("farmer_dashboard")
-                        },
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(stringResource(R.string.my_products))
-                    }
-                    
+                    // Save button at bottom (optional, since save is in top bar)
                     Spacer(modifier = Modifier.height(16.dp))
                     
-                    OutlinedButton(
-                        onClick = {
-                            navController.navigate("buyer_home")
-                        },
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(stringResource(R.string.products))
-                    }
-                    
-                    Spacer(modifier = Modifier.height(24.dp))
-                    
-                    //firestore connection test button
-                    OutlinedButton(
-                        onClick = {
-                            coroutineScope.launch {
-                                try {
-                                    isFirestoreConnected = FirestoreTest.testConnection(context)
-                                } catch (e: Exception) {
-                                    Log.e("ProfileScreen", "Error testing Firestore connection", e)
-                                }
-                            }
-                        },
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(
-                            if (isFirestoreConnected) 
-                                "Firestore Connection: Success" 
-                            else 
-                                "Test Firestore Connection"
-                        )
-                    }
+                    Text(
+                        text = if (hasChanges) 
+                            "💡 Tap the edit icon in the top-right corner to save your changes" 
+                        else 
+                            "💡 Make changes to your profile to see the save option",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                    )
                 }
             }
         }

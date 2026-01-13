@@ -9,6 +9,7 @@ data class User(
     val name: String = "",
     val phone: String = "",
     val whatsapp: String = "",
+    val profilePictureUrl: String = "",
     val language: String = "en" // Default to English
 )
 

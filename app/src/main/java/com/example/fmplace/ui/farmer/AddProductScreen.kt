@@ -9,6 +9,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.ui.res.stringResource
 import com.example.fmplace.R
 import androidx.compose.foundation.layout.Spacer
@@ -22,10 +27,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -111,7 +112,7 @@ fun AddProductScreen(navController: NavController, firebaseAuth: FirebaseAuth, d
                 title = { Text(stringResource(R.string.add_product)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
                 }
             )
@@ -347,7 +348,8 @@ fun AddProductScreen(navController: NavController, firebaseAuth: FirebaseAuth, d
                                         imageUrl = imageUrl, //this is now a cloudinary URL
                                         sellerId = currentUser.uid,
                                         sellerContact = phone,
-                                        sellerName = user.name
+                                        sellerName = user.name,
+                                        sellerProfilePictureUrl = user.profilePictureUrl
                                     )
                                     
                                     //add product to firestore

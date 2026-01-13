@@ -18,9 +18,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -146,7 +146,7 @@ fun FarmerDashboardScreen(navController: NavController, firebaseAuth: FirebaseAu
                     onClick = { navController.navigate("my_products") },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Icon(Icons.Filled.List, contentDescription = "My Products")
+                    Icon(Icons.AutoMirrored.Filled.List, contentDescription = "My Products")
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(stringResource(R.string.my_products))
                 }
@@ -157,7 +157,7 @@ fun FarmerDashboardScreen(navController: NavController, firebaseAuth: FirebaseAu
                     onClick = { navController.navigate("buyer_home") },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Icon(Icons.Filled.List, contentDescription = "Browse Products")
+                    Icon(Icons.AutoMirrored.Filled.List, contentDescription = "Browse Products")
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(stringResource(R.string.products))
                 }

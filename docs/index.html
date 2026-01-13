@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Market Place - Android App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            padding: 40px 0;
+        }
+        
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .feature {
+            padding: 20px;
+            border-left: 4px solid #667eea;
+            background: #f8f9ff;
+        }
+        
+        .feature h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .download-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: transform 0.3s ease;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .qr-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .qr-placeholder {
+            width: 200px;
+            height: 200px;
+            border: 2px dashed #ccc;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+        
+        .instructions {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .instructions h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .instructions ol {
+            margin-left: 20px;
+        }
+        
+        .github-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .github-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌾 Farmer Market Place</h1>
+            <p>Connect Farmers Directly with Buyers</p>
+        </div>
+        
+        <div class="content">
+            <h2>📱 About the App</h2>
+            <p>Farmer Market Place is a mobile application that bridges the gap between local farmers and buyers, making fresh produce accessible to everyone.</p>
+            
+            <div class="features">
+                <div class="feature">
+                    <h3>🥬 For Farmers</h3>
+                    <ul>
+                        <li>Add and manage your products</li>
+                        <li>Set your own prices</li>
+                        <li>Connect with local buyers</li>
+                        <li>Manage inventory easily</li>
+                    </ul>
+                </div>
+                
+                <div class="feature">
+                    <h3>🛒 For Buyers</h3>
+                    <ul>
+                        <li>Browse fresh local produce</li>
+                        <li>Compare prices from different farmers</li>
+                        <li>Contact farmers directly</li>
+                        <li>Get the best deals</li>
+                    </ul>
+                </div>
+                
+                <div class="feature">
+                    <h3>⚡ Key Features</h3>
+                    <ul>
+                        <li>Real-time product listings</li>
+                        <li>Secure messaging</li>
+                        <li>Image uploads for products</li>
+                        <li>Category-based browsing</li>
+                        <li>Farmer verification</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="download-section">
+                <h2>📥 Download the App</h2>
+                <p>Get the latest version of Farmer Market Place</p>
+                
+                <a href="https://github.com/pjadh/FarmerMP/releases/latest/download/app-release.apk" 
+                   class="download-btn">
+                    📱 Download APK (Android)
+                </a>
+                
+                <div class="qr-section">
+                    <h3>📷 Scan QR Code</h3>
+                    <div class="qr-placeholder">
+                        QR Code Here
+                    </div>
+                    <p>Scan with your phone camera to download</p>
+                </div>
+            </div>
+            
+            <div class="instructions">
+                <h4>📋 Installation Instructions</h4>
+                <ol>
+                    <li>Download the APK file using the button above</li>
+                    <li>Enable "Install from unknown sources" in your phone settings</li>
+                    <li>Find the downloaded APK file and tap to install</li>
+                    <li>Enjoy using Farmer Market Place!</li>
+                </ol>
+                <p><strong>Note:</strong> This app is currently in development phase. Please report any bugs you encounter.</p>
+            </div>
+            
+            <div class="github-link">
+                <p>
+                    <a href="https://github.com/pjadh/FarmerMP">
+                        🔗 View Source Code on GitHub
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // You can add analytics or other JavaScript here
+        console.log('Farmer Market Place - Demo Page Loaded');
+    </script>
+</body>
+</html>

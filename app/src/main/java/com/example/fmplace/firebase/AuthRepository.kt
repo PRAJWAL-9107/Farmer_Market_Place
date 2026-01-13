@@ -13,8 +13,8 @@ class AuthRepository @Inject constructor(
     private val db: FirebaseFirestore
 ) {
     init {
-        val settings = FirebaseFirestoreSettings.Builder().setPersistenceEnabled(true).build()
-        db.firestoreSettings = settings
+        // Persistence is now enabled by default, no need to explicitly set it
+        // Firebase Firestore will use default settings automatically
     }
     val currentUser: FirebaseUser?
         get() = firebaseAuth.currentUser

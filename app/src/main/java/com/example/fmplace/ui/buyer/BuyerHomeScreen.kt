@@ -48,6 +48,9 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.fmplace.firebase.AuthRepository
@@ -60,6 +63,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.ui.draw.clip
 
 // TODO: Fix: All usages of BuyerHomeScreen must provide firebaseAuth and db as arguments.
 // Example:
@@ -274,6 +278,32 @@ fun ProductCard(
             Column(
                 modifier = Modifier.padding(12.dp)
             ) {
+                // Seller info with profile picture
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    AsyncImage(
+                        model = if (product.sellerProfilePictureUrl.isNotBlank()) product.sellerProfilePictureUrl else null,
+                        contentDescription = "Seller Profile",
+                        modifier = Modifier
+                            .size(24.dp)
+                            .clip(CircleShape),
+                        contentScale = ContentScale.Crop
+                    )
+                    
+                    Text(
+                        text = product.sellerName,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.primary,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+                
+                Spacer(modifier = Modifier.height(8.dp))
+                
                 Text(
                     text = product.name,
                     style = MaterialTheme.typography.titleMedium,
