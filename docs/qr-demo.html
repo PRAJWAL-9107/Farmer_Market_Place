@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Market Place - QR Code Demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            padding: 40px 0;
+        }
+        
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        .qr-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .qr-container {
+            display: inline-block;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+        
+        .qr-container img {
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+        }
+        
+        .links-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .link-card {
+            background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .link-card:hover {
+            transform: translateY(-2px);
+        }
+        
+        .link-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .link-card a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 16px;
+            background: white;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        
+        .link-card a:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .instructions {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .instructions h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .instructions ol {
+            margin-left: 20px;
+        }
+        
+        .github-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .github-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .links-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌾 Farmer Market Place</h1>
+            <p>QR Code Demo - Quick Access to Web App</p>
+        </div>
+        
+        <div class="content">
+            <h2>📱 Scan QR Code to Try Web App</h2>
+            <p>Scan the QR code below with your phone camera to instantly open the Farmer Market Place web app demo.</p>
+            
+            <div class="qr-section">
+                <div class="qr-container">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://pjadh.github.io/FarmerMP/web-app.html" 
+                         alt="QR Code for Farmer Market Place Web App" 
+                         width="300" 
+                         height="300">
+                    <p class="text-sm text-gray-600 mt-4">📷 Scan with phone camera to open web app</p>
+                </div>
+            </div>
+            
+            <div class="links-section">
+                <div class="link-card">
+                    <h3>🌐 Web App Demo</h3>
+                    <p>Try the interactive web version of Farmer Market Place directly in your browser.</p>
+                    <a href="https://pjadh.github.io/FarmerMP/web-app.html" target="_blank">
+                        <i class="fas fa-external-link-alt mr-2"></i>Open Web App
+                    </a>
+                </div>
+                
+                <div class="link-card">
+                    <h3>📱 Download Android App</h3>
+                    <p>Get the full Android app with all features and offline capabilities.</p>
+                    <a href="https://github.com/pjadh/FarmerMP/releases/latest/download/app-release.apk" target="_blank">
+                        <i class="fas fa-download mr-2"></i>Download APK
+                    </a>
+                </div>
+                
+                <div class="link-card">
+                    <h3>🔗 View Source Code</h3>
+                    <p>Explore the complete source code on GitHub and contribute to the project.</p>
+                    <a href="https://github.com/pjadh/FarmerMP" target="_blank">
+                        <i class="fab fa-github mr-2"></i>View on GitHub
+                    </a>
+                </div>
+            </div>
+            
+            <div class="instructions">
+                <h4>📋 How to Use QR Code</h4>
+                <ol>
+                    <li>Open your phone camera app</li>
+                    <li>Point camera at the QR code above</li>
+                    <li>Wait for notification to appear</li>
+                    <li>Tap the notification to open web app</li>
+                    <li>Enjoy the interactive demo!</li>
+                </ol>
+                <p><strong>Note:</strong> Most modern phones support QR code scanning in the camera app.</p>
+            </div>
+            
+            <div class="github-link">
+                <p>
+                    <a href="https://github.com/pjadh/FarmerMP">
+                        🔗 View Project on GitHub
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Add any interactive features here
+        console.log('Farmer Market Place - QR Code Demo Loaded');
+    </script>
+</body>
+</html>

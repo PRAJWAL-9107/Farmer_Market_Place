@@ -7,11 +7,10 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* Responsive Design */
         .phone-container {
             width: 100%;
             max-width: 375px;
-            height: auto;
+            height: 80vh;
             min-height: 600px;
             margin: 0 auto;
             border-radius: 20px;
@@ -22,64 +21,19 @@
             position: relative;
         }
         
-        /* Tablet Styles */
         @media (min-width: 768px) {
             .phone-container {
                 max-width: 400px;
                 border-radius: 30px;
                 border: 10px solid #1a1a1a;
-                box-shadow: 0 15px 40px rgba(0,0,0,0.25);
-            }
-        }
-        
-        /* Desktop Styles - Show Multiple Phones */
-        @media (min-width: 1024px) {
-            .phone-container {
-                max-width: 380px;
-            }
-            
-            .phones-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-                gap: 40px;
-                align-items: start;
-            }
-            
-            .container {
-                max-width: 1200px;
-            }
-        }
-        
-        /* Large Desktop */
-        @media (min-width: 1280px) {
-            .phones-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 60px;
             }
         }
         
         .phone-screen {
             width: 100%;
-            height: 80vh;
-            max-height: 800px;
-            min-height: 600px;
+            height: 100%;
             overflow-y: auto;
             overflow-x: hidden;
-        }
-        
-        /* Mobile Height Adjustments */
-        @media (max-height: 700px) {
-            .phone-screen {
-                height: 70vh;
-                min-height: 500px;
-            }
-        }
-        
-        @media (max-height: 600px) {
-            .phone-screen {
-                height: 60vh;
-                min-height: 400px;
-            }
         }
         
         .bottom-nav {
@@ -90,12 +44,10 @@
             background: white;
             border-top: 1px solid #e5e7eb;
             padding: 8px 0;
-            backdrop-filter: blur(10px);
-            z-index: 10;
         }
         
         .product-card {
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s;
         }
         
         .product-card:hover {
@@ -118,7 +70,6 @@
             animation: slideIn 0.4s ease-out forwards;
         }
         
-        /* Responsive Typography */
         @media (max-width: 640px) {
             .container {
                 padding: 0 1rem;
@@ -132,42 +83,6 @@
                 margin: 1rem auto;
                 border-radius: 15px;
                 border: 6px solid #1a1a1a;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 1.5rem;
-            }
-            
-            .phone-container {
-                border-radius: 10px;
-                border: 4px solid #1a1a1a;
-            }
-        }
-        
-        /* Touch-friendly for mobile */
-        @media (hover: none) {
-            .product-card:active {
-                transform: scale(0.98);
-                background-color: #f9fafb;
-            }
-            
-            .product-card button:active {
-                transform: scale(0.95);
-            }
-        }
-        
-        /* Desktop hover effects */
-        @media (hover: hover) {
-            .product-card:hover {
-                transform: translateY(-4px);
-                box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            }
-            
-            .product-card button:hover {
-                transform: translateY(-1px);
-                box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
             }
         }
     </style>
