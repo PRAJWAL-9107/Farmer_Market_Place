@@ -10,8 +10,8 @@
         .phone-container {
             width: 100%;
             max-width: 375px;
-            height: 80vh;
-            min-height: 600px;
+            height: 60vh;
+            min-height: 400px;
             margin: 0 auto;
             border-radius: 20px;
             border: 8px solid #1a1a1a;
@@ -165,6 +165,88 @@
             100% { transform: rotate(360deg); }
         }
         
+        /* Custom orange colors to ensure visibility */
+        .bg-orange-500 {
+            background-color: #f97316 !important;
+        }
+        
+        .bg-orange-600 {
+            background-color: #ea580c !important;
+        }
+        
+        .bg-orange-400 {
+            background-color: #fb923c !important;
+        }
+        
+        .text-orange-200 {
+            color: #fed7aa !important;
+        }
+        
+        .bg-orange-800 {
+            background-color: #9a3412 !important;
+        }
+        
+        .bg-orange-900 {
+            background-color: #7c2d12 !important;
+        }
+        
+        .bg-amber-900 {
+            background-color: #78350f !important;
+        }
+        
+        /* Custom colors for app elements */
+        .bg-green-600 {
+            background-color: #ea580c !important;
+        }
+        
+        .text-green-600 {
+            color: #ea580c !important;
+        }
+        
+        .bg-green-500 {
+            background-color: #f97316 !important;
+        }
+        
+        .text-green-500 {
+            color: #f97316 !important;
+        }
+        
+        .bg-green-700 {
+            background-color: #c2410c !important;
+        }
+        
+        .text-green-700 {
+            color: #c2410c !important;
+        }
+        
+        .bg-green-400 {
+            background-color: #fb923c !important;
+        }
+        
+        .text-green-400 {
+            color: #fb923c !important;
+        }
+        
+        .bg-green-100 {
+            background-color: #fed7aa !important;
+        }
+        
+        .border-green-500 {
+            border-color: #ea580c !important;
+        }
+        
+        .text-gray-800 {
+            color: #1f2937 !important;
+        }
+        
+        .text-gray-600 {
+            color: #4b5563 !important;
+        }
+        
+        .text-gray-500 {
+            color: #6b7280 !important;
+        }
+        
         @media (max-width: 640px) {
             .container {
                 padding: 0 1rem;
@@ -182,21 +264,21 @@
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-green-50 to-blue-50 min-h-screen py-8">
+<body class="bg-gradient-to-br from-orange-800 via-orange-900 to-amber-900 min-h-screen py-8">
     <div class="container mx-auto px-4">
         <!-- Header -->
         <div class="text-center mb-8">
-            <h1 class="text-4xl font-bold text-gray-800 mb-2">
+            <h1 class="text-4xl font-bold text-black">
                 🌾 Farmer Market Place
             </h1>
-            <p class="text-gray-600 mb-4">Connect Farmers Directly with Buyers</p>
+            <p class="text-orange-200 mb-4">Connect Farmers Directly with Buyers</p>
             <div class="flex justify-center space-x-4">
                 <a href="https://github.com/PRAJWAL-9107/Farmer_Market_Place/" 
-                   class="inline-block bg-gray-800 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition">
+                   class="inline-block bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-400 transition">
                     <i class="fas fa-home mr-2"></i>Back to Demo
                 </a>
                 <a href="https://github.com/PRAJWAL-9107/Farmer_Market_Place/releases/download/v1.0.0/app-release.apk" 
-                   class="inline-block bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">
+                   class="inline-block bg-orange-600 text-white px-6 py-2 rounded-lg hover:bg-orange-500 transition">
                     <i class="fas fa-download mr-2"></i>Download App
                 </a>
             </div>
@@ -206,7 +288,7 @@
         <div class="phone-container">
             <div class="phone-screen">
                 <!-- Status Bar -->
-                <div class="bg-green-600 text-white px-4 py-2 flex justify-between items-center text-sm">
+                <div class="bg-orange-500 text-white px-4 py-2 flex justify-between items-center text-sm">
                     <span>9:41 AM</span>
                     <div class="flex space-x-1">
                         <i class="fas fa-signal"></i>
@@ -409,28 +491,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <!-- Bottom Navigation -->
-                <div class="bottom-nav">
-                    <div class="grid grid-cols-4 gap-1">
-                        <button class="flex flex-col items-center py-2 text-green-600">
-                            <i class="fas fa-home text-xl mb-1"></i>
-                            <span class="text-xs">Home</span>
-                        </button>
-                        <button class="flex flex-col items-center py-2 text-gray-400 hover:text-green-600 transition">
-                            <i class="fas fa-search text-xl mb-1"></i>
-                            <span class="text-xs">Search</span>
-                        </button>
-                        <button class="flex flex-col items-center py-2 text-gray-400 hover:text-green-600 transition">
-                            <i class="fas fa-plus-circle text-xl mb-1"></i>
-                            <span class="text-xs">Sell</span>
-                        </button>
-                        <button class="flex flex-col items-center py-2 text-gray-400 hover:text-green-600 transition">
-                            <i class="fas fa-user text-xl mb-1"></i>
-                            <span class="text-xs">Profile</span>
-                        </button>
                     </div>
                 </div>
             </div>
