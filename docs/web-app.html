@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Market Place - Web App</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .phone-container {
+            width: 100%;
+            max-width: 375px;
+            height: 80vh;
+            min-height: 600px;
+            margin: 0 auto;
+            border-radius: 20px;
+            border: 8px solid #1a1a1a;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+            background: white;
+            position: relative;
+        }
+        
+        @media (min-width: 768px) {
+            .phone-container {
+                max-width: 400px;
+                border-radius: 30px;
+                border: 10px solid #1a1a1a;
+            }
+        }
+        
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        
+        .bottom-nav {
+            position: sticky;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            padding: 8px 0;
+        }
+        
+        .product-card {
+            transition: transform 0.2s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        @keyframes slideIn {
+            from { 
+                opacity: 0;
+                transform: translateY(20px); 
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0); 
+            }
+        }
+        
+        .slide-in {
+            animation: slideIn 0.4s ease-out forwards;
+        }
+        
+        .tab-row {
+            display: flex;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            overflow-x: auto;
+        }
+        
+        .tab {
+            padding: 16px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .tab.active {
+            border-bottom-color: #10b981;
+            color: #10b981;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e5e7eb;
+            border-top: 4px solid #10b981;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        .drawer {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            transition: left 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .drawer.open {
+            left: 0;
+        }
+        
+        .drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            display: none;
+            z-index: 999;
+        }
+        
+        .drawer-overlay.show {
+            display: block;
+        }
+        
+        .drawer-header {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 20px;
+        }
+        
+        .drawer-item {
+            padding: 16px 20px;
+            border-bottom: 1px solid #f3f4f6;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .drawer-item:hover {
+            background: #f9fafb;
+        }
+        
+        .drawer-item i {
+            width: 20px;
+            margin-right: 12px;
+        }
+        
+        .drawer-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 640px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .phone-container {
+                margin: 1rem auto;
+                border-radius: 15px;
+                border: 6px solid #1a1a1a;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-green-50 to-blue-50 min-h-screen py-8">
+    <div class="container mx-auto px-4">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">
+                🌾 Farmer Market Place
+            </h1>
+            <p class="text-gray-600 mb-4">Connect Farmers Directly with Buyers</p>
+            <div class="flex justify-center space-x-4">
+                <a href="https://github.com/PRAJWAL-9107/Farmer_Market_Place/" 
+                   class="inline-block bg-gray-800 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition">
+                    <i class="fas fa-home mr-2"></i>Back to Demo
+                </a>
+                <a href="https://github.com/PRAJWAL-9107/Farmer_Market_Place/releases/download/v1.0.0/app-release.apk" 
+                   class="inline-block bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">
+                    <i class="fas fa-download mr-2"></i>Download App
+                </a>
+            </div>
+        </div>
+
+        <!-- Phone Container -->
+        <div class="phone-container">
+            <div class="phone-screen">
+                <!-- Status Bar -->
+                <div class="bg-green-600 text-white px-4 py-2 flex justify-between items-center text-sm">
+                    <span>9:41 AM</span>
+                    <div class="flex space-x-1">
+                        <i class="fas fa-signal"></i>
+                        <i class="fas fa-wifi"></i>
+                        <i class="fas fa-battery-full"></i>
+                    </div>
+                </div>
+
+                <!-- Header with Menu and Support -->
+                <div class="bg-green-600 text-white p-4">
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-xl font-bold">Browse Products</h2>
+                        <div class="flex space-x-2">
+                            <button onclick="toggleDrawer()" class="text-white hover:bg-green-700 transition p-2 rounded">
+                                <i class="fas fa-bars"></i>
+                            </button>
+                            <button onclick="showSupport()" class="text-white hover:bg-green-700 transition p-2 rounded">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Drawer Overlay -->
+                <div id="drawerOverlay" class="drawer-overlay" onclick="toggleDrawer()"></div>
+
+                <!-- Drawer Menu -->
+                <div id="drawer" class="drawer">
+                    <div class="drawer-header">
+                        <div class="flex items-center">
+                            <img src="https://ui-avatars.com/api/?name=John+Farmer&background=10b981&color=fff&size=50" 
+                                 class="w-12 h-12 rounded-full border-2 border-white mr-3" alt="Profile">
+                            <div>
+                                <h3 class="font-semibold text-lg">John Farmer</h3>
+                                <p class="text-sm opacity-90">john.farmer@email.com</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="drawer-content">
+                        <div class="drawer-item" onclick="selectDrawerItem('profile')">
+                            <i class="fas fa-user text-gray-600"></i>
+                            <span>Profile</span>
+                        </div>
+                        <div class="drawer-item" onclick="selectDrawerItem('browse')">
+                            <i class="fas fa-shopping-basket text-gray-600"></i>
+                            <span>Browse Products</span>
+                        </div>
+                        <div class="drawer-item" onclick="selectDrawerItem('sell')">
+                            <i class="fas fa-plus-circle text-gray-600"></i>
+                            <span>Sell Product</span>
+                        </div>
+                        <div class="drawer-item" onclick="selectDrawerItem('support')">
+                            <i class="fas fa-headset text-gray-600"></i>
+                            <span>Support</span>
+                        </div>
+                        
+                        <div class="drawer-bottom">
+                            <div class="drawer-item" onclick="selectDrawerItem('settings')">
+                                <i class="fas fa-cog text-gray-600"></i>
+                                <span>Settings</span>
+                            </div>
+                            <div class="drawer-item" onclick="selectDrawerItem('logout')">
+                                <i class="fas fa-sign-out-alt text-gray-600"></i>
+                                <span>Logout</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category Tabs -->
+                <div class="tab-row">
+                    <div class="tab active" onclick="selectCategory('all')">
+                        All
+                    </div>
+                    <div class="tab" onclick="selectCategory('vegetables')">
+                        🥬 Vegetables
+                    </div>
+                    <div class="tab" onclick="selectCategory('fruits')">
+                        🍎 Fruits
+                    </div>
+                    <div class="tab" onclick="selectCategory('dairy')">
+                        🥛 Dairy
+                    </div>
+                    <div class="tab" onclick="selectCategory('grains')">
+                        🌾 Grains
+                    </div>
+                </div>
+
+                <!-- Featured Products -->
+                <div class="px-4 mb-20">
+                    <h3 class="font-semibold text-gray-800 mb-3">Fresh from Farm</h3>
+                    
+                    <!-- Product Cards -->
+                    <div class="space-y-4">
+                        <!-- Product 1 -->
+                        <div class="bg-white rounded-lg shadow-sm overflow-hidden product-card cursor-pointer slide-in">
+                            <div class="flex">
+                                <img src="https://tse1.explicit.bing.net/th/id/OIP.ZQf_Lffx4PsbyJBuoEXxgAHaHG?rs=1&pid=ImgDetMain&o=7&rm=3" 
+                                     class="w-24 h-24 object-cover" alt="Tomatoes">
+                                <div class="flex-1 p-3">
+                                    <div class="flex items-start justify-between">
+                                        <div class="flex-1">
+                                            <div class="flex items-center mb-1">
+                                                <img src="https://ui-avatars.com/api/?name=Farmer+John&background=10b981&color=fff&size=20" 
+                                                     class="w-5 h-5 rounded-full mr-2" alt="Farmer">
+                                                <span class="text-xs text-green-600 font-medium">Farmer John</span>
+                                            </div>
+                                            <h4 class="font-semibold text-gray-800">Fresh Tomatoes</h4>
+                                            <p class="text-sm text-gray-500">Organic, farm-fresh</p>
+                                            <div class="flex items-center justify-between mt-2">
+                                                <span class="text-lg font-bold text-green-600">₹40/kg</span>
+                                                <button class="bg-green-600 text-white px-3 py-1 rounded-full text-xs hover:bg-green-700 transition">
+                                                    <i class="fas fa-plus mr-1"></i>Add
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 2 -->
+                        <div class="bg-white rounded-lg shadow-sm overflow-hidden product-card cursor-pointer slide-in" style="animation-delay: 0.1s">
+                            <div class="flex">
+                                <img src="https://tse3.mm.bing.net/th/id/OIP.XprgHSCfPgHBpfQBBfAWqwHaFb?rs=1&pid=ImgDetMain&o=7&rm=3" 
+                                     class="w-24 h-24 object-cover" alt="Apples">
+                                <div class="flex-1 p-3">
+                                    <div class="flex items-start justify-between">
+                                        <div class="flex-1">
+                                            <div class="flex items-center mb-1">
+                                                <img src="https://ui-avatars.com/api/?name=Farmer+Mary&background=ec4899&color=fff&size=20" 
+                                                     class="w-5 h-5 rounded-full mr-2" alt="Farmer">
+                                                <span class="text-xs text-green-600 font-medium">Farmer Mary</span>
+                                            </div>
+                                            <h4 class="font-semibold text-gray-800">Red Apples</h4>
+                                            <p class="text-sm text-gray-500">Sweet and crunchy</p>
+                                            <div class="flex items-center justify-between mt-2">
+                                                <span class="text-lg font-bold text-green-600">₹120/kg</span>
+                                                <button class="bg-green-600 text-white px-3 py-1 rounded-full text-xs hover:bg-green-700 transition">
+                                                    <i class="fas fa-plus mr-1"></i>Add
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 3 -->
+                        <div class="bg-white rounded-lg shadow-sm overflow-hidden product-card cursor-pointer slide-in" style="animation-delay: 0.2s">
+                            <div class="flex">
+                                <img src="https://w7.pngwing.com/pngs/618/666/png-transparent-clear-glass-bottle-of-milk-and-drinking-glass-cows-milk-bottle-milk-milk-chocolate-milk-splash-milk-cup-thumbnail.png" 
+                                     class="w-24 h-24 object-cover" alt="Milk">
+                                <div class="flex-1 p-3">
+                                    <div class="flex items-start justify-between">
+                                        <div class="flex-1">
+                                            <div class="flex items-center mb-1">
+                                                <img src="https://ui-avatars.com/api/?name=Happy+Dairy&background=3b82f6&color=fff&size=20" 
+                                                     class="w-5 h-5 rounded-full mr-2" alt="Farmer">
+                                                <span class="text-xs text-green-600 font-medium">Happy Dairy</span>
+                                            </div>
+                                            <h4 class="font-semibold text-gray-800">Fresh Milk</h4>
+                                            <p class="text-sm text-gray-500">Pure and healthy</p>
+                                            <div class="flex items-center justify-between mt-2">
+                                                <span class="text-lg font-bold text-green-600">₹60/liter</span>
+                                                <button class="bg-green-600 text-white px-3 py-1 rounded-full text-xs hover:bg-green-700 transition">
+                                                    <i class="fas fa-plus mr-1"></i>Add
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 4 -->
+                        <div class="bg-white rounded-lg shadow-sm overflow-hidden product-card cursor-pointer slide-in" style="animation-delay: 0.3s">
+                            <div class="flex">
+                                <img src="https://toppng.com/public/uploads/preview/basmati-rice-white-rice-1156303176889tceyf7sz.png" 
+                                     class="w-24 h-24 object-cover" alt="Rice">
+                                <div class="flex-1 p-3">
+                                    <div class="flex items-start justify-between">
+                                        <div class="flex-1">
+                                            <div class="flex items-center mb-1">
+                                                <img src="https://ui-avatars.com/api/?name=Farmer+Raj&background=f59e0b&color=fff&size=20" 
+                                                     class="w-5 h-5 rounded-full mr-2" alt="Farmer">
+                                                <span class="text-xs text-green-600 font-medium">Farmer Raj</span>
+                                            </div>
+                                            <h4 class="font-semibold text-gray-800">Basmati Rice</h4>
+                                            <p class="text-sm text-gray-500">Premium quality</p>
+                                            <div class="flex items-center justify-between mt-2">
+                                                <span class="text-lg font-bold text-green-600">₹150/kg</span>
+                                                <button class="bg-green-600 text-white px-3 py-1 rounded-full text-xs hover:bg-green-700 transition">
+                                                    <i class="fas fa-plus mr-1"></i>Add
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Navigation -->
+                <div class="bottom-nav">
+                    <div class="grid grid-cols-4 gap-1">
+                        <button class="flex flex-col items-center py-2 text-green-600">
+                            <i class="fas fa-home text-xl mb-1"></i>
+                            <span class="text-xs">Home</span>
+                        </button>
+                        <button class="flex flex-col items-center py-2 text-gray-400 hover:text-green-600 transition">
+                            <i class="fas fa-search text-xl mb-1"></i>
+                            <span class="text-xs">Search</span>
+                        </button>
+                        <button class="flex flex-col items-center py-2 text-gray-400 hover:text-green-600 transition">
+                            <i class="fas fa-plus-circle text-xl mb-1"></i>
+                            <span class="text-xs">Sell</span>
+                        </button>
+                        <button class="flex flex-col items-center py-2 text-gray-400 hover:text-green-600 transition">
+                            <i class="fas fa-user text-xl mb-1"></i>
+                            <span class="text-xs">Profile</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Drawer functionality
+        function toggleDrawer() {
+            const drawer = document.getElementById('drawer');
+            const overlay = document.getElementById('drawerOverlay');
+            
+            drawer.classList.toggle('open');
+            overlay.classList.toggle('show');
+        }
+        
+        function showSupport() {
+            alert('Support: Contact us at support@farmermarketplace.com');
+        }
+        
+        function selectDrawerItem(item) {
+            toggleDrawer();
+            
+            // Show what was selected (for demo purposes)
+            const messages = {
+                'profile': 'Profile - View and edit your profile information',
+                'browse': 'Browse Products - Already on this page',
+                'sell': 'Sell Product - Add your products to the market',
+                'support': 'Support - Get help and contact information',
+                'settings': 'Settings - Configure app preferences',
+                'logout': 'Logout - Sign out of your account'
+            };
+            
+            console.log(`Selected: ${messages[item]}`);
+            
+            // For demo, just show a simple message
+            if (item !== 'browse') {
+                setTimeout(() => {
+                    alert(messages[item]);
+                }, 300);
+            }
+        }
+
+        // Simple interactivity matching Android app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Product card interactions
+            const productCards = document.querySelectorAll('.product-card');
+            productCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Simulate product detail view
+                    console.log('Product clicked');
+                });
+            });
+
+            // Add to cart functionality
+            const addButtons = document.querySelectorAll('.product-card button');
+            addButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const originalText = button.innerHTML;
+                    button.innerHTML = '<i class="fas fa-check mr-1"></i>Added!';
+                    button.classList.remove('bg-green-600');
+                    button.classList.add('bg-gray-500');
+                    
+                    setTimeout(() => {
+                        button.innerHTML = originalText;
+                        button.classList.remove('bg-gray-500');
+                        button.classList.add('bg-green-600');
+                    }, 2000);
+                });
+            });
+
+            // Category interactions
+            const categories = document.querySelectorAll('.grid.grid-cols-4 > div');
+            categories.forEach(category => {
+                category.addEventListener('click', function() {
+                    // Remove active state from all
+                    categories.forEach(c => c.classList.remove('bg-green-100', 'border-2', 'border-green-500'));
+                    // Add active state to clicked
+                    this.classList.add('bg-green-100', 'border-2', 'border-green-500');
+                });
+            });
+
+            // Navigation interactions
+            const navButtons = document.querySelectorAll('.bottom-nav button');
+            navButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active state from all
+                    navButtons.forEach(b => b.classList.remove('text-green-600'));
+                    navButtons.forEach(b => b.classList.add('text-gray-400'));
+                    // Add active state to clicked
+                    this.classList.remove('text-gray-400');
+                    this.classList.add('text-green-600');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
