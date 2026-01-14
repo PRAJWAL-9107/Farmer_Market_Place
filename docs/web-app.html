@@ -10,7 +10,7 @@
         .phone-container {
             width: 100%;
             max-width: 375px;
-            height: 30vh;
+            height: 25vh;
             margin: 0 auto;
             border-radius: 20px;
             border: 8px solid #1a1a1a;
@@ -18,6 +18,14 @@
             overflow: hidden;
             background: white;
             position: relative;
+        }
+        
+        /* Mobile specific styles */
+        @media (max-width: 767px) {
+            .phone-container {
+                height: 25vh !important;
+                max-width: 375px !important;
+            }
         }
         
         @media (min-width: 768px) {
