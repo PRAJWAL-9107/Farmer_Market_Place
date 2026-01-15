@@ -29,7 +29,7 @@ Visit our demo page: [https://pjadh.github.io/FarmerMP/](https://prajwal-9107.gi
 
 ## 📥 Download
 
-Get the latest APK from our [GitHub Releases](https://github.com/pjadh/FarmerMP/releases/latest)
+Get the latest APK from our [GitHub Releases](https://github.com/PRAJWAL-9107/Farmer_Market_Place/releases/download/v1.0.0/app-release.apk)
 
 ## 🔧 Setup
 
