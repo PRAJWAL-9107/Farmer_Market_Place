@@ -4,7 +4,7 @@ A mobile application that connects farmers directly with buyers, making fresh pr
 
 ## 🚀 Try the App
 
-Visit our demo page: [https://pjadh.github.io/FarmerMP/](https://pjadh.github.io/FarmerMP/)
+Visit our demo page: [[https://pjadh.github.io/FarmerMP/](https://pjadh.github.io/FarmerMP/](https://prajwal-9107.github.io/Farmer_Market_Place/))
 
 ## 📱 Features
 
